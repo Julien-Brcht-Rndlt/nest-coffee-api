@@ -9,9 +9,8 @@ import {
   Patch,
   Post,
   Put,
-  Res,
+  Query,
 } from '@nestjs/common';
-import { identity } from 'rxjs';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -24,8 +23,10 @@ export class CoffeesController {
   } */
 
   @Get()
-  findAll() {
-    return 'Retrieving all coffees, what else?';
+  findAll(@Query() pagination) {
+    const { limit, offset } = pagination;
+    const end = parseInt(offset) + parseInt(limit);
+    return `Retrieving all coffees from ${offset} to ${end}, what else?`;
   }
 
   /* @Get(':id')
