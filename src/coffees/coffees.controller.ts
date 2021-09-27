@@ -11,6 +11,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdatePartCoffeeDto } from './dto/update-part-coffee.dto';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -60,16 +62,19 @@ export class CoffeesController {
   } */
 
   @Post()
-  create(@Body() body) {
-    this.coffeesService.create(body);
-    return body;
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    this.coffeesService.create(createCoffeeDto);
+    return createCoffeeDto;
     //return `Creating a new coffee: ${body.name}
     //    with a price of $${body.price.toFixed(2)}`;
   }
 
   @Patch(':id')
-  updatePart(@Param('id') id: string, @Body() body) {
-    this.coffeesService.updatePart(parseInt(id), body);
+  updatePart(
+    @Param('id') id: string,
+    @Body() updatePartCoffeeDto: UpdatePartCoffeeDto,
+  ) {
+    this.coffeesService.updatePart(parseInt(id), updatePartCoffeeDto);
     return this.coffeesService.readOne(parseInt(id));
   }
 

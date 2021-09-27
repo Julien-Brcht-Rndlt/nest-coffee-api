@@ -1,4 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdatePartCoffeeDto } from './dto/update-part-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
 
 @Injectable()
@@ -13,7 +15,7 @@ export class CoffeesService {
     },
   ];
 
-  create(createCoffeeDto: any) {
+  create(createCoffeeDto: CreateCoffeeDto) {
     this.coffees.push(createCoffeeDto);
   }
 
@@ -37,7 +39,7 @@ export class CoffeesService {
     return this.coffees;
   }
 
-  updatePart(id: number, updatePartCoffeeDto: any) {
+  updatePart(id: number, updatePartCoffeeDto: UpdatePartCoffeeDto) {
     this.coffees = this.coffees.map((coffee) =>
       coffee.id !== id
         ? coffee
