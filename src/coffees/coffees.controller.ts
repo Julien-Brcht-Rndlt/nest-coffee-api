@@ -9,11 +9,13 @@ import {
   Patch,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
+import { CoffeesService } from './coffees.service';
 
 @Controller('coffees')
 export class CoffeesController {
+  constructor(private readonly coffeesService: CoffeesService) {}
+
   /* @Get()
   findAll(@Res() response) {
     // To be used with caution as loosing NestJS abstraction + compatibility with
@@ -22,11 +24,16 @@ export class CoffeesController {
     //return 'Retrieving all coffees, what else?';
   } */
 
-  @Get()
+  /* @Get()
   findAll(@Query() pagination) {
     const { limit, offset } = pagination;
     const end = parseInt(offset) + parseInt(limit);
     return `Retrieving all coffees from ${offset} to ${end}, what else?`;
+  } */
+
+  @Get()
+  findAll() {
+    return this.coffeesService.readAll();
   }
 
   /* @Get(':id')
@@ -36,7 +43,7 @@ export class CoffeesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return `Retrieving coffee #${id}, what else?`;
+    return this.coffeesService.readOne(parseInt(id));
   }
 
   /* @Post()
@@ -54,6 +61,7 @@ export class CoffeesController {
 
   @Post()
   create(@Body() body) {
+    this.coffeesService.create(body);
     return body;
     //return `Creating a new coffee: ${body.name}
     //    with a price of $${body.price.toFixed(2)}`;
@@ -61,17 +69,22 @@ export class CoffeesController {
 
   @Patch(':id')
   updatePart(@Param('id') id: string, @Body() body) {
-    return `Updating partially coffee #${id}, what else?`;
+    this.coffeesService.updatePart(parseInt(id), body);
+    return this.coffeesService.readOne(parseInt(id));
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() body) {
-    return `Updating coffee #${id}, what else?`;
+    this.coffeesService.update(parseInt(id), body);
+    return {
+      id,
+      ...body,
+    };
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
-    return `Removing coffee #${id}, what else?`;
+    this.coffeesService.delete(parseInt(id));
   }
 }
