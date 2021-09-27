@@ -44,8 +44,8 @@ export class CoffeesController {
   } */
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.coffeesService.readOne(parseInt(id));
+  findOne(@Param('id') id: number) {
+    return this.coffeesService.readOne(id);
   }
 
   /* @Post()
@@ -71,16 +71,16 @@ export class CoffeesController {
 
   @Patch(':id')
   updatePart(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updatePartCoffeeDto: UpdatePartCoffeeDto,
   ) {
-    this.coffeesService.updatePart(parseInt(id), updatePartCoffeeDto);
-    return this.coffeesService.readOne(parseInt(id));
+    this.coffeesService.updatePart(id, updatePartCoffeeDto);
+    return this.coffeesService.readOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() body) {
-    this.coffeesService.update(parseInt(id), body);
+  update(@Param('id') id: number, @Body() body) {
+    this.coffeesService.update(id, body);
     return {
       id,
       ...body,
@@ -89,7 +89,7 @@ export class CoffeesController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
-    this.coffeesService.delete(parseInt(id));
+  remove(@Param('id') id: number) {
+    this.coffeesService.delete(id);
   }
 }
