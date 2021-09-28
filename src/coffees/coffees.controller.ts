@@ -63,18 +63,17 @@ export class CoffeesController {
 
   @Post()
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
-    this.coffeesService.create(createCoffeeDto);
-    return createCoffeeDto;
+    return this.coffeesService.create(createCoffeeDto);
     //return `Creating a new coffee: ${body.name}
     //    with a price of $${body.price.toFixed(2)}`;
   }
 
   @Patch(':id')
-  updatePart(
+  async updatePart(
     @Param('id') id: number,
     @Body() updatePartCoffeeDto: UpdatePartCoffeeDto,
   ) {
-    this.coffeesService.updatePart(id, updatePartCoffeeDto);
+    await this.coffeesService.updatePart(id, updatePartCoffeeDto);
     return this.coffeesService.readOne(id);
   }
 
