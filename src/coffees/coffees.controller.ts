@@ -9,7 +9,9 @@ import {
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdatePartCoffeeDto } from './dto/update-part-coffee.dto';
@@ -34,8 +36,8 @@ export class CoffeesController {
   } */
 
   @Get()
-  findAll() {
-    return this.coffeesService.readAll();
+  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.coffeesService.readAll(paginationQueryDto);
   }
 
   /* @Get(':id')
