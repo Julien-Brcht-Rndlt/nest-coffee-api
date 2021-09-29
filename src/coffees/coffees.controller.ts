@@ -10,11 +10,11 @@ import {
   Post,
   Put,
   Query,
-  SetMetadata,
+  /* SetMetadata, */
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { IS_PUBLIC_KEY, Public } from 'src/common/decorators/public.decorator';
+import { Public } from 'src/common/decorators/public.decorator';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
