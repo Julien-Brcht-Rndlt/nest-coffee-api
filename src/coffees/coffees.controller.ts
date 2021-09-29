@@ -18,7 +18,7 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdatePartCoffeeDto } from './dto/update-part-coffee.dto';
 
-@UsePipes(ValidationPipe)
+/* @UsePipes(ValidationPipe) */
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
@@ -38,6 +38,7 @@ export class CoffeesController {
     return `Retrieving all coffees from ${offset} to ${end}, what else?`;
   } */
 
+  @UsePipes(ValidationPipe)
   @Get()
   findAll(@Query() paginationQueryDto: PaginationQueryDto) {
     return this.coffeesService.readAll(paginationQueryDto);
