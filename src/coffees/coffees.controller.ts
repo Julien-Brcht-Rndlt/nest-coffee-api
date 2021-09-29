@@ -14,6 +14,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { IS_PUBLIC_KEY, Public } from 'src/common/decorators/public.decorator';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
@@ -41,7 +42,8 @@ export class CoffeesController {
 
   @UsePipes(ValidationPipe)
   @Get()
-  @SetMetadata('isPublic', true)
+  /*   @SetMetadata('isPublic', true) */
+  @Public()
   findAll(@Query() paginationQueryDto: PaginationQueryDto) {
     return this.coffeesService.readAll(paginationQueryDto);
   }
