@@ -10,6 +10,7 @@ import {
   Post,
   Put,
   Query,
+  SetMetadata,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -40,6 +41,7 @@ export class CoffeesController {
 
   @UsePipes(ValidationPipe)
   @Get()
+  @SetMetadata('isPublic', true)
   findAll(@Query() paginationQueryDto: PaginationQueryDto) {
     return this.coffeesService.readAll(paginationQueryDto);
   }
