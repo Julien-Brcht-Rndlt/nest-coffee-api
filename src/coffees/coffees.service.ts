@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Event } from 'src/events/entities/event.entity';
@@ -16,7 +17,19 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
     private readonly connection: Connection,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    /*  const databaseHost = this.configService.get<string>(
+      // 'DATABSE_HOST',
+      'database.host',
+      'localhost',
+    ); */
+    //console.log(databaseHost);
+
+    /* const coffeesConfig = this.configService.get<string>('coffees'); */
+    const coffeesConfig = this.configService.get<string>('coffees.foo');
+    console.log(coffeesConfig);
+  }
 
   async create(createCoffeeDto: CreateCoffeeDto): Promise<Coffee> {
     const flavors: Flavor[] = await Promise.all(
