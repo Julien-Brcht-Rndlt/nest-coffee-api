@@ -77,7 +77,7 @@ export class CoffeesController {
   @Patch(':id')
   async updatePart(
     @Param('id') id: number,
-    @Body() updatePartCoffeeDto: UpdatePartCoffeeDto,
+    @Body(ValidationPipe) updatePartCoffeeDto: UpdatePartCoffeeDto,
   ) {
     await this.coffeesService.updatePart(id, updatePartCoffeeDto);
     return this.coffeesService.readOne(id);
