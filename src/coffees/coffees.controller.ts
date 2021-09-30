@@ -22,7 +22,7 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdatePartCoffeeDto } from './dto/update-part-coffee.dto';
 
-/* @ApiTags('coffees') */
+@ApiTags('coffees')
 /* @UsePipes(ValidationPipe) */
 @Controller('coffees')
 export class CoffeesController {
@@ -43,7 +43,7 @@ export class CoffeesController {
     return `Retrieving all coffees from ${offset} to ${end}, what else?`;
   } */
 
-  @ApiTags('Http GET end-points')
+  /* @ApiTags('Http GET end-points') */
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   /* @ApiForbiddenResponseResponse({ description: 'Forbidden.' }) */
   @UsePipes(ValidationPipe)
@@ -60,7 +60,7 @@ export class CoffeesController {
     return `Retrieving coffee #${params.id}, what else?`;
   } */
 
-  @ApiTags('Http GET end-points')
+  /* @ApiTags('Http GET end-points') */
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.coffeesService.readOne(id);
@@ -79,7 +79,7 @@ export class CoffeesController {
     //    with a price of $${body.price.toFixed(2)}`;
   } */
 
-  @ApiTags('Http POST end-points')
+  /* @ApiTags('Http POST end-points') */
   @Post()
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
     return this.coffeesService.create(createCoffeeDto);
@@ -87,7 +87,7 @@ export class CoffeesController {
     //    with a price of $${body.price.toFixed(2)}`;
   }
 
-  @ApiTags('Http PUT/PATCH end-points')
+  /* @ApiTags('Http PUT/PATCH end-points') */
   @Patch(':id')
   async updatePart(
     @Param('id') id: number,
@@ -97,7 +97,7 @@ export class CoffeesController {
     return this.coffeesService.readOne(id);
   }
 
-  @ApiTags('Http PUT/PATCH end-points')
+  /* @ApiTags('Http PUT/PATCH end-points') */
   @Put(':id')
   update(@Param('id') id: number, @Body() body) {
     this.coffeesService.update(id, body);
@@ -107,7 +107,7 @@ export class CoffeesController {
     };
   }
 
-  @ApiTags('Http DELETE end-points')
+  /* @ApiTags('Http DELETE end-points') */
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: number) {
