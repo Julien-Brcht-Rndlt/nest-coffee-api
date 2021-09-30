@@ -1,8 +1,8 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 export const Protocol = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext): string => {
+  (defaultProtocol: string, ctx: ExecutionContext): string => {
     const request = ctx.switchToHttp().getRequest();
-    return request.protocol;
+    return defaultProtocol ? defaultProtocol : request.protocol;
   },
 );
