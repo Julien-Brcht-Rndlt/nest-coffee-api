@@ -46,7 +46,7 @@ export class CoffeesController {
   /*   @SetMetadata('isPublic', true) */
   @Public()
   async findAll(@Query() paginationQueryDto: PaginationQueryDto) {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    /* await new Promise((resolve) => setTimeout(resolve, 5000)); */
     return this.coffeesService.readAll(paginationQueryDto);
   }
 
@@ -56,7 +56,7 @@ export class CoffeesController {
   } */
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.coffeesService.readOne(id);
   }
 
