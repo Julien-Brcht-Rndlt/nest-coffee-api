@@ -14,6 +14,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
@@ -21,6 +22,7 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdatePartCoffeeDto } from './dto/update-part-coffee.dto';
 
+/* @ApiTags('coffees') */
 /* @UsePipes(ValidationPipe) */
 @Controller('coffees')
 export class CoffeesController {
@@ -41,10 +43,13 @@ export class CoffeesController {
     return `Retrieving all coffees from ${offset} to ${end}, what else?`;
   } */
 
+  @ApiTags('Http GET end-points')
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  /* @ApiForbiddenResponseResponse({ description: 'Forbidden.' }) */
   @UsePipes(ValidationPipe)
-  @Get()
   /*   @SetMetadata('isPublic', true) */
   @Public()
+  @Get()
   async findAll(@Query() paginationQueryDto: PaginationQueryDto) {
     /* await new Promise((resolve) => setTimeout(resolve, 5000)); */
     return this.coffeesService.readAll(paginationQueryDto);
@@ -55,6 +60,7 @@ export class CoffeesController {
     return `Retrieving coffee #${params.id}, what else?`;
   } */
 
+  @ApiTags('Http GET end-points')
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.coffeesService.readOne(id);
@@ -73,6 +79,7 @@ export class CoffeesController {
     //    with a price of $${body.price.toFixed(2)}`;
   } */
 
+  @ApiTags('Http POST end-points')
   @Post()
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
     return this.coffeesService.create(createCoffeeDto);
@@ -80,6 +87,7 @@ export class CoffeesController {
     //    with a price of $${body.price.toFixed(2)}`;
   }
 
+  @ApiTags('Http PUT/PATCH end-points')
   @Patch(':id')
   async updatePart(
     @Param('id') id: number,
@@ -89,6 +97,7 @@ export class CoffeesController {
     return this.coffeesService.readOne(id);
   }
 
+  @ApiTags('Http PUT/PATCH end-points')
   @Put(':id')
   update(@Param('id') id: number, @Body() body) {
     this.coffeesService.update(id, body);
@@ -98,6 +107,7 @@ export class CoffeesController {
     };
   }
 
+  @ApiTags('Http DELETE end-points')
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: number) {
