@@ -15,6 +15,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Protocol } from 'src/common/decorators/protocol.decorator';
 import { Public } from 'src/common/decorators/public.decorator';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
@@ -50,7 +51,11 @@ export class CoffeesController {
   /*   @SetMetadata('isPublic', true) */
   @Public()
   @Get()
-  async findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+  async findAll(
+    @Protocol() protocol: string,
+    @Query() paginationQueryDto: PaginationQueryDto,
+  ) {
+    console.log('protocol', protocol);
     /* await new Promise((resolve) => setTimeout(resolve, 5000)); */
     return this.coffeesService.readAll(paginationQueryDto);
   }
